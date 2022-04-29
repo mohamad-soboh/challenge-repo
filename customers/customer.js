@@ -49,7 +49,14 @@ app.post("/customer", (req, res) => {
 });
 
 
-
+//Get all customers API
+app.get("/allcustomer", (req, res) => {
+    Customer.find().then((customers) => {
+      res.json(customers)}).catch((err) => {
+          throw err;
+        });
+  });
+  
 
 //Delete customer api
 
