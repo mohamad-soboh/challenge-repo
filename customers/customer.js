@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 //load mangoose
 const mongoose = require("mongoose");
+const res = require("express/lib/response");
 
 //loading the customer model
 require("./customerModel");
@@ -50,7 +51,7 @@ app.post("/customer", (req, res) => {
 
 
 //Get all customers API
-app.get("/allcustomer", (req, res) => {
+app.get("/AllCustomers", (req, res) => {
     Customer.find().then((customers) => {
       res.json(customers)}).catch((err) => {
           throw err;
@@ -59,4 +60,10 @@ app.get("/allcustomer", (req, res) => {
   
 
 //Delete customer api
-
+app.delete("/DeleteCustomer/:id",(req, res) => {
+    Customer.findOneAndRemove({_id: req.params.id}).then(()=>{
+        res.send("book removed with success !")
+    }).catch((err) => {
+        throw err;
+      });
+      });
