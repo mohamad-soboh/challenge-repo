@@ -13,3 +13,18 @@ app.get('/',(req,res)=>{
 app.listen(4545,()=> {
     console.log("server started ! ");
 });
+
+//loading the customer model
+require("./mobileValidationModel");
+const Mobile = mongoose.model("mobile");
+
+
+// fetch(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${req.body.mb}`)
+// .then(data => {
+// return data.json();
+// })
+// .then(post => {
+// console.log(post);
+// });
+
+
