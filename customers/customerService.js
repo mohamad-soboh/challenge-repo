@@ -33,42 +33,35 @@ app.listen(4545, () => {
 
 //Add Customer API
 app.post("/Addcustomer", (req, res) => {
-
   var newCustomer = {
     customer_name: req.body.customer_name,
     customer_adress: req.body.customer_adress,
     customer_mobile_number: req.body.customer_mobile_number,
   };
-  //validating customer phone number
-fetch(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${newCustomer.customer_mobile_number}`)
-.then(data => {
-return data.json();
-})
-.then(post => {
-console.log(post);
-//if the number is valid 
-if(post.valid==true)
-{
-//create  a new customer with those attribute that we recieved
-  var customer = new Customer(newCustomer);
-  customer
-    .save()
-    .then(() => {
-      console.log(" customer created!");
-      console.log(customer);
+  //validating customer phone number through a third  party api
+  fetch(
+    `https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${newCustomer.customer_mobile_number}`
+  )
+    .then((data) => {
+      return data.json();
     })
-    .catch((err) => {
-      throw err;
+    .then((post) => {
+      //if the number is valid
+      if (post.valid == true) {
+        //create  a new customer with those attribute that we recieved
+        var customer = new Customer(newCustomer);
+        customer
+          .save()
+          .then(() => {
+            console.log(" customer created!");
+            console.log(customer);
+          })
+          .catch((err) => {
+            throw err;
+          });
+        res.send(" a new customer has been created with successs");
+      } else res.send("invalid phone number");
     });
-  res.send(" a new customer has been created with successs");
-}
-else
-res.send("invalid phone number");
-});
-
-
-  
-
 });
 
 //Get all customers API
@@ -95,11 +88,14 @@ app.delete("/DeleteCustomer/:id", (req, res) => {
 
 //Update customer api
 app.patch("/update/:id", (req, res) => {
-  Customer.findOneAndUpdate({ _id: req.params.id },
-    {customer_name:req.body.customer_name,
-      customer_adress:req.body.customer_adress,
-      customer_mobile_number:req.body.customer_mobile_number
-    })
+  Customer.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      customer_name: req.body.customer_name,
+      customer_adress: req.body.customer_adress,
+      customer_mobile_number: req.body.customer_mobile_number,
+    }
+  )
     .then(() => {
       console.log(req.body);
       res.send("customer updated with success !");
