@@ -33,30 +33,24 @@ app.listen(4545, () => {
 
 //Add Customer API
 app.post("/Addcustomer", (req, res) => {
-fetch(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${req.body.mb}`)
+
+  var newCustomer = {
+    customer_name: req.body.customer_name,
+    customer_adress: req.body.customer_adress,
+    customer_mobile_number: req.body.customer_mobile_number,
+  };
+  //validating customer phone number
+fetch(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${newCustomer.customer_mobile_number}`)
 .then(data => {
 return data.json();
 })
 .then(post => {
-  var new_mobile_validity = {
-    mobile_country_code: post.country.prefix,
-    mobile_country_name: post.country.name,
-    mobile_operator_name: post.carrier,
-    mobile_number: post.phone,
-    mobile_validity:post.valid
-  }
-console.log(new_mobile_validity);
 console.log(post);
-
-});
-  var newCustomer = {
-    customer_name: req.body.name,
-    customer_adress: req.body.adress,
-    customer_mobile_number: req.body.mb,
-  };
-  //create  a new customer with those attribute that we recieved
-  if(mobile_validity == true)
-  {var customer = new Customer(newCustomer);
+//if the number is valid 
+if(post.valid==true)
+{
+//create  a new customer with those attribute that we recieved
+  var customer = new Customer(newCustomer);
   customer
     .save()
     .then(() => {
@@ -68,9 +62,13 @@ console.log(post);
     });
   res.send(" a new customer has been created with successs");
 }
-else{
-  res.send(" invalid phone number");
-}
+else
+res.send("invalid phone number");
+});
+
+
+  
+
 });
 
 //Get all customers API
@@ -104,7 +102,7 @@ app.patch("/update/:id", (req, res) => {
     })
     .then(() => {
       console.log(req.body);
-      res.send("book updated with success !");
+      res.send("customer updated with success !");
     })
     .catch((err) => {
       throw err;

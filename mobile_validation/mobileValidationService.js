@@ -28,3 +28,19 @@ const Mobile = mongoose.model("mobile");
 // });
 
 
+// fetch(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${req.body.customer_mobile_number}`)
+// .then(data => {
+// return data.json();
+// })
+// .then(post => {
+//   var new_mobile_validity = {
+//     mobile_country_code: post.country.prefix,
+//     mobile_country_name: post.country.name,
+//     mobile_operator_name: post.carrier,
+//     mobile_number: post.phone,
+//     mobile_validity:post.valid
+//   }
+// console.log(new_mobile_validity);
+// console.log(post);
+
+// });
