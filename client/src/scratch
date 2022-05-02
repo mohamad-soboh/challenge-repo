@@ -1,0 +1,45 @@
+ <Router>
+    <div>
+    <div>
+    <table>
+    <thead>
+      <tr>Name</tr>
+      <tr>adress</tr>
+      <tr>phone number</tr>
+      <tr>Name</tr>
+
+    </thead>
+  </table>
+    </div>
+      <button>
+        Get all customers
+      </button>
+      <button>
+        Create Customer
+      </button>
+      {/* <div>
+        <div> Customer name  {customers[0].customer_name}</div>
+        <div> Customer adress</div>
+        <div> Customer mobile</div>
+    </div> */}
+
+<div className="App">
+  
+      {
+        customers.map(customer=>
+
+            <div key={customer._id} style={{alignItems:'center',margin:'20px 60px'}}>
+            <h4>{customer.customer_name}</h4>
+            <p>{customer.customer_adress}</p>
+            <p>{customer.customer_mobile_number}</p>
+
+          </div>
+
+        )
+      }
+    </div>
+    
+    </div>
+
+    </Router>
+  

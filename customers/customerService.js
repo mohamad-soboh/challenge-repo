@@ -16,6 +16,11 @@ const Customer = mongoose.model("customer");
 require("../mobile_validation/mobileValidationModel");
 const Mobile = mongoose.model("mobile");
 
+
+const cors = require('cors');
+app.use(cors({
+    origin:  '*'
+}));
 //connecting to mangodb
 mongoose.connect(
   "mongodb+srv://admin:admin@cluster0.qhek7.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
