@@ -82,9 +82,10 @@ app.get("/AllCustomers", (req, res) => {
 
 //Delete customer api
 app.delete("/DeleteCustomer/:id", (req, res) => {
+  
   Customer.findOneAndRemove({ _id: req.params.id })
     .then(() => {
-      res.send("book removed with success !");
+      res.send("customer removed with success !");
     })
     .catch((err) => {
       throw err;
