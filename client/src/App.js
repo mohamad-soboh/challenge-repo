@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import createCustomer from "/Users/mohamadsoboh/ReactNativeProjects/challenge-repo/client/src/createCustomerView.js";
-import { Customer_List } from "./Customer_List";
-import ReadOnlyRow from "./components/ReadOnlyRow";
 export default function App() {
   const [customers, setCustomers] = useState([]);
   //storing the  form values as an obj in single state hook
@@ -12,6 +10,7 @@ export default function App() {
     adress: "",
     mobileNumber: "",
   });
+  const [phoneValidate, setPhoneValidate] = useState([1]);
   //state to handle form erros
   const [updateFormData, setUpdateFormData] = useState({
     fullName: "",
@@ -21,11 +20,14 @@ export default function App() {
   });
 
   //validating  the form
-  const validate = (values) => {
-    const errors = {};
-    const username_regex = /^[A-Za-z]+$/;
-  };
-
+  // const validate = (mobile)=>
+  // axios.get(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${mobile}`)
+  // .then((response) => setPhoneValidate([...response.data]));
+  
+  const disp =()=>
+   {
+     console.log(phoneValidate);
+   }
   //using a handler to update the form values
   const handleAddFormChange = (event) => {
     event.preventDefault();
@@ -69,7 +71,13 @@ export default function App() {
   };
   useEffect(() => {
     GetAllCustomers();
-  }, [customers]);
+}, []);
+useEffect(() => {
+  const interval = setInterval(() => {
+GetAllCustomers();
+  }, 500);
+  return () => clearInterval(interval);
+}, []);
 
   // Requesting GET All Customer Api
   const GetAllCustomers = () => {
@@ -100,11 +108,10 @@ export default function App() {
     }),
   };
   //creating a customer using Add Customer Api
+
   const onCreateCustomer = () => {
     fetch("http://localhost:4545/Addcustomer", requestOptions).then(
-      (response) => console.log(response)
-    );
-  };
+      (response) =>  console.log(response))  };
   //Deleting a customer
   const onDeleteCustomer = (customerId) => {
     console.log(customerId);
@@ -186,6 +193,7 @@ export default function App() {
         <button type="submit" onClick={onCreateCustomer}>
         Submit
         </button>
+        {/* <button>validate</button> */}
       </form>
 
       <h3>update Customer</h3>
@@ -197,6 +205,7 @@ export default function App() {
           required="reuired"
           placeholder="Enter name"
           onChange={handleEditFormChange}
+          
         ></input>
         <input
           type="text"

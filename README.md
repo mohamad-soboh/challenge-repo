@@ -30,3 +30,8 @@ useReducer provides more predictable state transitions than useState , which bec
 React Router for better navigation between components.
 
 making custom hooks for code reusability.
+
+better handling of API erros using status codes
+
+learning about dependndecy i njection
+using  react devtools

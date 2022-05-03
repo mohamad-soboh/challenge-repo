@@ -60,12 +60,16 @@ app.post("/Addcustomer", (req, res) => {
           .then(() => {
             console.log(" customer created!");
             console.log(customer);
+            Customer.find()
+            .then((customers) => {
+              res.json(customers);
           })
           .catch((err) => {
             throw err;
           });
-        res.send(" a new customer has been created with successs");
-      } else res.send("invalid phone number");
+         
+          })      } 
+          else res.send("invalid phone number");
     });
 });
 
