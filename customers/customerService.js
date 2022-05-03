@@ -39,9 +39,9 @@ app.listen(4545, () => {
 //Add Customer API
 app.post("/Addcustomer", (req, res) => {
   var newCustomer = {
-    customer_name: req.body.customer_name,
-    customer_adress: req.body.customer_adress,
-    customer_mobile_number: req.body.customer_mobile_number,
+    customer_name: req.body.fullName,
+    customer_adress: req.body.adress,
+    customer_mobile_number: req.body.mobileNumber,
   };
   //validating customer phone number through a third  party api
   fetch(

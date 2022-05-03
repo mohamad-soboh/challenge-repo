@@ -1,45 +1,71 @@
- <Router>
-    <div>
-    <div>
-    <table>
-    <thead>
-      <tr>Name</tr>
-      <tr>adress</tr>
-      <tr>phone number</tr>
-      <tr>Name</tr>
-
-    </thead>
-  </table>
-    </div>
-      <button>
-        Get all customers
-      </button>
-      <button>
-        Create Customer
-      </button>
-      {/* <div>
-        <div> Customer name  {customers[0].customer_name}</div>
-        <div> Customer adress</div>
-        <div> Customer mobile</div>
-    </div> */}
-
-<div className="App">
-  
-      {
-        customers.map(customer=>
-
-            <div key={customer._id} style={{alignItems:'center',margin:'20px 60px'}}>
-            <h4>{customer.customer_name}</h4>
-            <p>{customer.customer_adress}</p>
-            <p>{customer.customer_mobile_number}</p>
-
-          </div>
-
-        )
+const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(
+      {  
+        "fullName": "khalil soboh",
+        "adress": "jadra",
+        "mobileNumber":96176618152
+      })
+  };
+  const onCreateCustomer  = () => {
+    fetch('http://localhost:4545/Addcustomer',requestOptions)
+        .then((response) => console.log(response));  
+      //  if (!response.ok) {
+      //     throw new Error("Something went wrong!");
+      //   }
       }
-    </div>
-    
-    </div>
 
-    </Router>
-  
+
+      const re = /^[0-9\b]+$/;
+
+
+
+      onst handleAddFormChange =(event)=>{
+        event.preventDefault();
+        const fieldName =event.target.getAttribute('name');
+        const fieldValue =event.target.value;
+      
+      //making a cope from the exisit form data so we can mutate it 
+        const newFormData ={...addFormData};
+        //update the obj with the new value the user has tiped
+       newFormData[fieldName]=fieldValue;
+       
+       setAddFormData(newFormData);
+       console.log(addFormData);
+       
+      }
+
+
+
+
+
+
+
+      <form >
+        <input 
+        type="text" 
+        name ="fullName"
+        required="reuired"
+        placeholder="Enter name"
+        onKeyPress={event => (event.key >= 65 && event.key <= 90) || (event.key >= 97 && event.key <= 122)}
+        onChange={handleAddFormChange}
+        ></input>
+         <input 
+        type="text" 
+        name ="adress"
+        required="reuired"
+        placeholder="Enter an adress"
+        pattern="[a-z]"
+        onChange={handleAddFormChange}
+        ></input>
+         <input 
+        type="text"
+        name ="mobileNumber"
+        required="reuired"
+        placeholder="Enter mobile number"
+        onChange={handleAddFormChange}
+        ></input>
+        <button type='submit' onClick={onCreateCustomer} >Add</button>
+      </form>
+
