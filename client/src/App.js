@@ -18,7 +18,8 @@ export default function App() {
     mobileNumber: "",
     id:""
   });
-
+  const [Deleted, setDeleted] = useState(1);
+ 
   //validating  the form
   // const validate = (mobile)=>
   // axios.get(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${mobile}`)
@@ -71,19 +72,22 @@ export default function App() {
   };
   useEffect(() => {
     GetAllCustomers();
-}, []);
-useEffect(() => {
-  const interval = setInterval(() => {
-GetAllCustomers();
-  }, 500);
-  return () => clearInterval(interval);
-}, []);
+}, [Deleted]);
+// useEffect(() => {
+//   const interval = setInterval(() => {
+// GetAllCustomers();
+//   }, 500);
+//   return () => clearInterval(interval);
+// }, []);
 
   // Requesting GET All Customer Api
   const GetAllCustomers = () => {
     axios
-      .get("http://localhost:4545/AllCustomers")
-      .then((response) => setCustomers([...response.data]));
+      .get("http://localhost:4545/api/customers/AllCustomers")
+      .then((response) => {
+        setCustomers([...response.data])
+        console.log(response)
+      });
     //  if (!response.ok) {
     //     throw new Error("Something went wrong!");
     //   }
@@ -110,22 +114,31 @@ GetAllCustomers();
   //creating a customer using Add Customer Api
 
   const onCreateCustomer = () => {
-    fetch("http://localhost:4545/Addcustomer", requestOptions).then(
+    fetch("http://localhost:4545/api/customers/Addcustomer", requestOptions).then(
       (response) =>  console.log(response))  };
   //Deleting a customer
   const onDeleteCustomer = (customerId) => {
     console.log(customerId);
-    axios.delete(`http://localhost:4545/DeleteCustomer/${customerId}`);
+    axios.delete(`http://localhost:4545/api/customers/DeleteCustomer/${customerId}`).then((response) =>
+    {
+      console.log(response)
+      setDeleted(0);
+    }
+  );
   };
 
   //update a customer
   const onUpdateCustomer = (updateFormData) => {
-    fetch(`http://localhost:4545/update/${updateFormData.id}`, requestUpdateOptions).then((response) =>
+    fetch(`http://localhost:4545/api/customers/update/${updateFormData.id}`, requestUpdateOptions).then((response) =>
       console.log(response)
     );
   };
   return (
+
+
+
     <div style={{ marginTop: "15px" }}>
+ {customers.length == 0 ?  <h2>You dont have any customer records</h2>: 
       <table>
         <thead>
           <tr>
@@ -165,6 +178,7 @@ GetAllCustomers();
           })}
         </tbody>
       </table>
+}
       <h3>Add a Customer</h3>
       <form>
         <input
