@@ -22,10 +22,13 @@ export default function App() {
   });
   const [Deleted, setDeleted] = useState(1);
  
-  //validating  the form
-  // const validate = (mobile)=>
-  // axios.get(`https://phonevalidation.abstractapi.com/v1/?api_key=30a0870189ae4438ac41958b995fc39b&phone=${mobile}`)
-  // .then((response) => setPhoneValidate([...response.data]));
+  const formik =useFormik({
+    initialValues:{
+      fullName: "",
+      adress: "",
+      mobileNumber: "",
+    }
+  })
   
   const disp =()=>
    {
@@ -186,25 +189,25 @@ export default function App() {
         <input
           type="text"
           name="fullName"
-          value={addFormData.fullName.replace(/[^a-z\s]/gi, "")}
           required="reuired"
           placeholder="Enter name"
-          onChange={handleAddFormChange}
+          onChange={formik.handleChange}
+          value={formik.values.fullName}
         ></input>
         <input
           type="text"
           name="adress"
           required="reuired"
           placeholder="Enter an adress"
-          onChange={handleAddFormChange}
-        ></input>
+          onChange={formik.handleChange}
+          value={formik.values.adress} ></input>
         <input
           type="text"
           name="mobileNumber"
           required="reuired"
           placeholder="Enter mobile number"
-          value={addFormData.mobileNumber.replace(/[^0-9]/, "")}
-          onChange={handleAddFormChange}
+          onChange={formik.handleChange}
+          value={formik.values.mobileNumber}
         ></input>
         <button type="submit" onClick={onCreateCustomer}>
         Submit

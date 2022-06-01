@@ -34,13 +34,13 @@ router.get("/AllCustomers", (req, res) => {
 router.delete("/DeleteCustomer/:id", (req, res) => {
   Customer.findOneAndRemove({ _id: req.params.id })
     .then(() => {
-        res.status(200).json({
-            messsage: "Deleted with success !",
-        });
+      res.status(200).json({
+        messsage: "Deleted with success !",
+      });
     })
     .catch((err) => {
-        console.log(err.response.data);
-        });
+      console.log(err.response.data);
+    });
 });
 
 //@route  POST api/users
@@ -73,22 +73,22 @@ router.post("/Addcustomer", (req, res) => {
 //@desc   Update a Customer
 //@acess  Public/
 router.patch("/update/:id", (req, res) => {
-    Customer.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        customer_name: req.body.customer_name,
-        customer_adress: req.body.customer_adress,
-        customer_mobile_number: req.body.customer_mobile_number,
-      }
-    )
-      .then(() => {
-        console.log(req.body);
-        res.send("customer updated with success !");
-      })
-      .catch((err) => {
-        throw err;
-      });
-  });
+  Customer.findOneAndUpdate(
+    { _id: req.params.id },
+    {
+      customer_name: req.body.customer_name,
+      customer_adress: req.body.customer_adress,
+      customer_mobile_number: req.body.customer_mobile_number,
+    }
+  )
+    .then(() => {
+      console.log(req.body);
+      res.send("customer updated with success !");
+    })
+    .catch((err) => {
+      throw err;
+    });
+});
 
 //export all the routers
 module.exports = router;
