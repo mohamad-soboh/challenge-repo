@@ -2,7 +2,7 @@
 require("../../models/Customer");
 const mongoose = require("mongoose");
 const Customer = mongoose.model("customer");
-
+const mobileService =require("../mobileValidationAPI/mobileValidationController")
 const customer_index = (req, res) => {
     Customer.find()
     .then((customers) => {
@@ -14,11 +14,13 @@ const customer_index = (req, res) => {
 };
 
 const customer_create = (req, res) => {
-    var newCustomer = {
+     var newCustomer = {
         customer_name: req.body.fullName,
         customer_adress: req.body.adress,
         customer_mobile_number: req.body.mobileNumber,
       };
+    //  const ans= mobileService.mobile_validate(req.body.mobileNumber);
+    //     console.log(ans);
       //create  a new customer with those attribute that we recieved
       var customer = new Customer(newCustomer);
       customer.save().then(() => {
