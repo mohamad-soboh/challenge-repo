@@ -15,9 +15,9 @@ const customer_index = (req, res) => {
 
 const customer_create = (req, res) => {
     var newCustomer = {
-        customer_name: req.body.fullName,
-        customer_adress: req.body.adress,
-        customer_mobile_number: req.body.mobileNumber,
+        customer_name: req.body.customer_name,
+        customer_adress: req.body.customer_adress,
+        customer_mobile_number: req.body.customer_mobile_number,
       };
       //create  a new customer with those attribute that we recieved
       var customer = new Customer(newCustomer);

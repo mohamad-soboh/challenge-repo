@@ -58,10 +58,7 @@ export default function App() {
   const handleUpdateCustomerClick = (customer) => {
     updatedFormik.setFieldValue("fullName", customer.customer_name);
     updatedFormik.setFieldValue("adress", customer.customer_adress);
-    updatedFormik.setFieldValue(
-      "mobileNumber",
-      customer.customer_mobile_number
-    );
+    updatedFormik.setFieldValue( "mobileNumber",customer.customer_mobile_number);
     updatedFormik.setFieldValue("id", customer._id);
   };
   useEffect(() => {
@@ -183,7 +180,7 @@ export default function App() {
         </table>
       )}
       <h3>Add a Customer</h3>
-      <form>
+      <form onSubmit={forimk.handleSubmit}>
         <input
           type="text"
           name="fullName"
