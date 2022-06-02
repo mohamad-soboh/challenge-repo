@@ -14,10 +14,10 @@ const customer_index = (req, res) => {
 };
 
 const customer_create = (req, res) => {
-     var newCustomer = {
-        customer_name: req.body.fullName,
-        customer_adress: req.body.adress,
-        customer_mobile_number: req.body.mobileNumber,
+    var newCustomer = {
+        customer_name: req.body.customer_name,
+        customer_adress: req.body.customer_adress,
+        customer_mobile_number: req.body.customer_mobile_number,
       };
     //  const ans= mobileService.mobile_validate(req.body.mobileNumber);
     //     console.log(ans);
