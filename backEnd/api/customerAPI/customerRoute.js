@@ -4,7 +4,7 @@ const express = require("express");
 const router = express.Router();
 const res = require("express/lib/response");
 
-const customerController =require('../api/customerController')
+const customerController =require('./customerController')
 //for proxy
 const cors = require("cors");
 router.use(

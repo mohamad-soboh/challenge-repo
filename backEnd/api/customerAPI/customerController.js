@@ -1,5 +1,5 @@
 //loading the customer model
-require("../models/Customer");
+require("../../models/Customer");
 const mongoose = require("mongoose");
 const Customer = mongoose.model("customer");
 

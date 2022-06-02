@@ -18,7 +18,7 @@ app.use(cors({
 }));
 
 //define Routes 
-app.use('/api/customers',require('./routes/api/customers'));
+app.use('/api/customers',require('./api/customerAPI/customerRoute'));
 
 
 const PORT = process.env.PORT || 4545;
