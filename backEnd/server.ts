@@ -1,9 +1,7 @@
-const express = require("express");
-const connectDb =require('../config/db');
+import express from "express";
+import connectDb  from '../config/db';
+
 const app = express();
-const res = require("express/lib/response");
-
-
 
 //Connect DataBase 
 connectDb();

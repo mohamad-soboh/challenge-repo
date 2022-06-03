@@ -1,7 +1,5 @@
 
-  const express = require('express')
-  const axios = require('axios')
-  
+import axios from 'axios';  
   
   
   const mobile_validate =async (mobile)=>

@@ -1,8 +1,8 @@
 //loading the customer model
 require("../../models/Customer");
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
 const Customer = mongoose.model("customer");
-const mobileService = require("../mobileValidationAPI/mobileValidationController");
+import  mobileService from "../mobileValidationAPI/mobileValidationController";
 const customer_index = (req, res) => {
   Customer.find()
     .then((customers) => {

@@ -1,10 +1,13 @@
 //bring in express
-const express = require("express");
+import  express from "express";
+
 //importing customer controller
+import  customerController from './customerController';
+
 const router = express.Router();
+
 const res = require("express/lib/response");
 
-const customerController =require('./customerController')
 //for proxy
 const cors = require("cors");
 router.use(
