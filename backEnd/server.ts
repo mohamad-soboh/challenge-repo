@@ -1,11 +1,13 @@
 import express from "express";
-import connectDb  from '../config/db';
-
+import connectDB  from '../config/db';
+import router from './api/customerAPI/customerRoute'
 const app = express();
 
 //Connect DataBase 
-connectDb();
-//init Middlware
+connectDB();
+
+
+init Middlware
 app.use(express.json({extended :false}));
 
 app.get('/',(req,res)=> res.send('API Running'));
@@ -16,10 +18,10 @@ app.get('/',(req,res)=> res.send('API Running'));
 // }));
 
 //define Routes 
-app.use('/api/customers',require('./api/customerAPI/customerRoute'));
+app.use('/api/customers',router);
 
 
-const PORT = process.env.PORT || 4545;
+const PORT = process.env.PORT || 8081;
 
 app.listen(4545, () => {
   console.log("server started ! ");

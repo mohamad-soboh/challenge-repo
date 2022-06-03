@@ -1,8 +1,8 @@
 //loading the customer model
-require("../../models/Customer");
+// require("../../models/Customer");
 import mongoose from 'mongoose';
 const Customer = mongoose.model("customer");
-import  mobileService from "../mobileValidationAPI/mobileValidationController";
+import mobileService from "../mobileValidationAPI/mobileValidationController";
 const customer_index = (req, res) => {
   Customer.find()
     .then((customers) => {
@@ -78,9 +78,9 @@ const customer_delete = (req, res) => {
     });
 };
 
-module.exports = {
+export default {
   customer_index,
   customer_create,
   customer_update,
-  customer_delete,
-};
+  customer_delete,};
+

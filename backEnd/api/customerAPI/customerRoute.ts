@@ -1,15 +1,13 @@
 //bring in express
 import  express from "express";
-
 //importing customer controller
 import  customerController from './customerController';
+//for proxy
+import  cors from 'cors';
+
+
 
 const router = express.Router();
-
-const res = require("express/lib/response");
-
-//for proxy
-const cors = require("cors");
 router.use(
   cors({
     origin: "*",
@@ -45,4 +43,4 @@ router.delete("/DeleteCustomer/:id",customerController.customer_delete);
 
 
 //export all the routers
-module.exports = router;
+export default router;

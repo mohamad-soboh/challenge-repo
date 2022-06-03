@@ -1,13 +1,13 @@
 //load mangoose
-const mongoose = require("mongoose");
+import  mongoose from 'mongoose';
 //loading the config
-const config = require("config");
+import config from 'config';
 //getting the URI attribute from that json file
 const db = config.get("mongoURI");
 
-const connectDB = async () => {
+const connectDB = () => {
   try {
-    await mongoose.connect(db);
+     mongoose.connect(db);
     console.log('MongoDB connected...');
   } catch (err) {
     console.error(err.message);
@@ -17,4 +17,6 @@ const connectDB = async () => {
 };
 
 
-module.exports =connectDB;
+export default {
+  connectDB
+};

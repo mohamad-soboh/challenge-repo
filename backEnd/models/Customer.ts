@@ -1,4 +1,4 @@
-const mongoose =require("mongoose");
+import mongoose from 'mongoose'
 
 //A model is a ref to our collection inside the db
 //creating attributes for our customer
@@ -21,5 +21,4 @@ const CustomerSchema =new  mongoose.Schema({
 })
 //Cutomer is a varaible that we store in the model
 ///mongo.model('modelname, schemaname')
-module.exports = Customer =mongoose.model('customer',CustomerSchema);
-
+module.exports = mongoose.model('customer',CustomerSchema);
