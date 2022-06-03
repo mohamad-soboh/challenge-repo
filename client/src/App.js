@@ -13,6 +13,10 @@ export default function App() {
       fullName: "",
       adress: "",
       mobileNumber: "",
+      valid: null,
+      operatorName:"",
+      countryCode: "",
+      countryName: ""
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
@@ -26,8 +30,8 @@ export default function App() {
         .matches(phoneRegExp, "Phone number is not valid")
         .required("Required"),
     }),
-    onSubmit: () => {
-      onCreateCustomer();
+    onSubmit: (values) => {
+       onCreateCustomer();
     },
   });
   const updatedFormik = useFormik({
@@ -49,8 +53,7 @@ export default function App() {
         .matches(phoneRegExp, "Phone number is not valid")
         .required("Required"),
     }),
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: () => {
       onUpdateCustomer();
     },
   });
@@ -64,6 +67,9 @@ export default function App() {
   useEffect(() => {
     GetAllCustomers();
   }, [Deleted]);
+  useEffect(() => {
+    GetAllCustomers();
+  }, [forimk.values]);
 
   // Requesting GET All Customer Api
   const GetAllCustomers = () => {
@@ -98,16 +104,21 @@ export default function App() {
   };
   //creating a customer using Add Customer Api
 
-  const onCreateCustomer = () => {
+  const onCreateCustomer = async() => {
     console.log(requestOptions);
-    fetch(
-      "http://localhost:4545/api/customers/Addcustomer",
-      requestOptions
-    ).then((response) => {
-      console.log(response);
-      setDeleted(0);
-    });
-    setDeleted(1);
+   const res = await fetch("http://localhost:4545/api/customers/Addcustomer",requestOptions)
+   const data= await res.json();
+      console.log(data);
+      const valid =data.valid;
+      const operatorName =data.operatorName;
+      const countryName =data.valcountryNameid;
+      const countryCode =data.countryCode;
+      forimk.setFieldValue("valid", valid);
+      forimk.setFieldValue("operatorName", operatorName);
+      forimk.setFieldValue("countryName", countryName);
+      forimk.setFieldValue("countryCode", countryCode);
+    //   setDeleted(0);
+    // setDeleted(1);
   };
   //Deleting a customer
   const onDeleteCustomer = (customerId) => {
@@ -251,6 +262,7 @@ export default function App() {
         <input
           type="text"
           name="mobileNumber"
+          placeholder="Enter mobile number"
           value={updatedFormik.values.mobileNumber}
           onChange={updatedFormik.handleChange}
           onBlur={updatedFormik.handleBlur}
