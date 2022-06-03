@@ -12,7 +12,6 @@ router.use(
     origin: "*",
   })
 );
-//use express router
 
 
 

@@ -3,9 +3,17 @@ import axios from "axios";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Formik, useFormik, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { csonParser } from "config/parser";
 
 export default function App() {
   const [customers, setCustomers] = useState([]);
+  const [validate, setValidate] = useState({
+    valid: "",
+    operatorName: "",
+    countryCode: "",
+    countryName: "",
+  });
+
   const [Deleted, setDeleted] = useState(1);
   const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
   const forimk = useFormik({
@@ -14,9 +22,9 @@ export default function App() {
       adress: "",
       mobileNumber: "",
       valid: null,
-      operatorName:"",
+      operatorName: "",
       countryCode: "",
-      countryName: ""
+      countryName: "",
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
@@ -31,7 +39,7 @@ export default function App() {
         .required("Required"),
     }),
     onSubmit: (values) => {
-       onCreateCustomer();
+      onCreateCustomer();
     },
   });
   const updatedFormik = useFormik({
@@ -61,15 +69,21 @@ export default function App() {
   const handleUpdateCustomerClick = (customer) => {
     updatedFormik.setFieldValue("fullName", customer.customer_name);
     updatedFormik.setFieldValue("adress", customer.customer_adress);
-    updatedFormik.setFieldValue( "mobileNumber",customer.customer_mobile_number);
+    updatedFormik.setFieldValue(
+      "mobileNumber",
+      customer.customer_mobile_number
+    );
     updatedFormik.setFieldValue("id", customer._id);
   };
   useEffect(() => {
     GetAllCustomers();
   }, [Deleted]);
+
   useEffect(() => {
     GetAllCustomers();
-  }, [forimk.values]);
+    console.log(validate);
+    console.log(forimk.values);
+  }, [validate]);
 
   // Requesting GET All Customer Api
   const GetAllCustomers = () => {
@@ -104,21 +118,23 @@ export default function App() {
   };
   //creating a customer using Add Customer Api
 
-  const onCreateCustomer = async() => {
+  const onCreateCustomer = async () => {
     console.log(requestOptions);
-   const res = await fetch("http://localhost:4545/api/customers/Addcustomer",requestOptions)
-   const data= await res.json();
-      console.log(data);
-      const valid =data.valid;
-      const operatorName =data.operatorName;
-      const countryName =data.valcountryNameid;
-      const countryCode =data.countryCode;
-      forimk.setFieldValue("valid", valid);
-      forimk.setFieldValue("operatorName", operatorName);
-      forimk.setFieldValue("countryName", countryName);
-      forimk.setFieldValue("countryCode", countryCode);
-    //   setDeleted(0);
-    // setDeleted(1);
+    const res = await fetch(
+      "http://localhost:4545/api/customers/Addcustomer",
+      requestOptions
+    );
+    const data = await res.json();
+    console.log(data);
+
+    const formValues = {
+      valid: data.valid,
+      operatorName: data.operatorName,
+      countryCode: data.countryCode,
+      countryName: data.countryName,
+    };
+    setValidate(formValues);
+    console.log(res);
   };
   //Deleting a customer
   const onDeleteCustomer = (customerId) => {
@@ -229,6 +245,20 @@ export default function App() {
           <p>{forimk.errors.mobileNumber} </p>
         ) : null}
         <button type="submit">Submit</button>
+
+        <p style={{ display: "inline-block", marginRight: "5px" }}>
+          {validate.countryName}
+        </p>
+        <p style={{ display: "inline-block", marginRight: "5px" }}>
+          {validate.countryCode}
+        </p>
+        {validate.valid ? <p>valid</p> : <p>invalid</p> }
+
+        {validate.valid}
+        
+        <p style={{ display: "inline-block", marginRight: "5px" }}>
+          {validate.operatorName}
+        </p>
       </form>
 
       <h3>update Customer</h3>

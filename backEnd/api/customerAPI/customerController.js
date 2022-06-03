@@ -22,23 +22,28 @@ const customer_create = async (req, res) => {
   const ans = await mobileService.mobile_validate(newCustomer.customer_mobile_number);
   //create  a new customer with those attribute that we recieved
   console.log(ans);
-  if (ans.valid) {
+
+const mobileCounter =await Customer.find({customer_mobile_number:req.body.customer_mobile_number})
+
+  if (ans.valid && mobileCounter.length==0) {
     var customer = new Customer(newCustomer);
     customer.save();
     console.log(" customer created!");
-    res.json({ status: 'customer created with success !',
-               valid: ans.valid,
-               operatorName: ans.carrier,
-               countryCode: ans.country.prefix,
-               countryName: ans.country.name,
-   });
+    const objectToReturn = { status: 'customer created with success !',
+    valid: ans.valid,
+    operatorName: ans.carrier,
+    countryCode: ans.country.prefix,
+    countryName: ans.country.name,
+}
+    res.statusCode = 201;
+    res.send(objectToReturn)
 
     console.log(customer);
 
   }
   else
     {
-      res.json({ status: 'customer not created  !',
+      res.send({ status: 'customer not created  !',
       valid: ans.valid,
 });
     }

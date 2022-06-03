@@ -12,10 +12,10 @@ app.use(express.json({extended :false}));
 
 app.get('/',(req,res)=> res.send('API Running'));
 
-const cors = require('cors');
-app.use(cors({
-    origin:  '*'
-}));
+// const cors = require('cors');
+// app.use(cors({
+//     origin:  '*'
+// }));
 
 //define Routes 
 app.use('/api/customers',require('./api/customerAPI/customerRoute'));
