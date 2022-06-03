@@ -4,11 +4,11 @@ import router from './api/customerAPI/customerRoute'
 const app = express();
 
 //Connect DataBase 
-connectDB();
+connectDB;
 
 
-init Middlware
-app.use(express.json({extended :false}));
+// init Middlware
+// app.use(express.json({extended :false}));
 
 app.get('/',(req,res)=> res.send('API Running'));
 
