@@ -1,9 +1,12 @@
 //loading the customer model
-// require("../../models/Customer");
-import mongoose from 'mongoose';
-const Customer = mongoose.model("customer");
+require("../../models/Customer");
 import mobileService from "../mobileValidationAPI/mobileValidationController";
-const customer_index = (req, res) => {
+import Customer from "../../models/Customer";
+import { Request, Response } from "express";
+
+
+
+export const customer_index = (req:Request, res:Response) => {
   Customer.find()
     .then((customers) => {
       res.status(200).json(customers);
@@ -13,7 +16,7 @@ const customer_index = (req, res) => {
     });
 };
 
-const customer_create = async (req, res) => {
+export const customer_create = async (req:Request, res:Response) => {
   var newCustomer = {
     customer_name: req.body.customer_name,
     customer_adress: req.body.customer_adress,

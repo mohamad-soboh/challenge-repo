@@ -5,9 +5,9 @@ import config from 'config';
 //getting the URI attribute from that json file
 const db = config.get("mongoURI");
 
-const connectDB = () => {
+const connectDB = async() => {
   try {
-     mongoose.connect(db as string);
+    await mongoose.connect(db as string);
     console.log('MongoDB connected...');
   } catch (err) {
     console.error(err);
@@ -16,6 +16,7 @@ const connectDB = () => {
   }
 };
 
+(()=>connectDB())();
 
 export default {
   connectDB
