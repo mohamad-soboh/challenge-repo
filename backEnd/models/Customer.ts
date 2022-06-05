@@ -5,14 +5,13 @@ import mongoose ,{  Schema, Document } from "mongoose";
 //creating attributes for our customer
 //customer_name customer_adress customer_mobile_number
 
-// interface CustomerInterface extends Document {
+//creating interface//
  export interface CustomerInterface extends Document {
-
   customer_name: string;
   customer_adress: string;
   customer_mobile_number: Number;
 }
-
+//creating customer schema //
 const CustomerSchema: Schema = new Schema({
   customer_name: { type: String, required: true },
   customer_adress: { type: String, required: true },
@@ -20,7 +19,7 @@ const CustomerSchema: Schema = new Schema({
 });
 
 //Cutomer is a varaible that we store in the model
-///mongo.model('modelname, schemaname')
+//then we export  the schema  
 const Customer = mongoose.model<CustomerInterface>("User", CustomerSchema);
 
 export default Customer;
