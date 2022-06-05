@@ -52,7 +52,7 @@ const mobileCounter =await Customer.find({customer_mobile_number:req.body.custom
     }
 };
 
-const customer_update = (req, res) => {
+const customer_update = (req: Request, res: Response) => {
   Customer.findOneAndUpdate(
     { _id: req.params.id },
     {
@@ -69,7 +69,7 @@ const customer_update = (req, res) => {
       throw err;
     });
 };
-const customer_delete = (req, res) => {
+const customer_delete = (req: Request, res: Response) => {
   Customer.findOneAndRemove({ _id: req.params.id })
     .then(() => {
       res.status(200).json({
