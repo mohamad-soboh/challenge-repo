@@ -20,6 +20,6 @@ const CustomerSchema: Schema = new Schema({
 
 //Cutomer is a varaible that we store in the model
 //then we export  the schema  
-const Customer = mongoose.model<CustomerInterface>("customers", CustomerSchema);
+const Customer = mongoose.model<CustomerInterface>("User", CustomerSchema);
 
 export default Customer;
