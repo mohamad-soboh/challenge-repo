@@ -47,7 +47,7 @@ const mobileCounter =await Customer.find({customer_mobile_number:req.body.custom
   }
   else
     {
-      res.send({ status: 'customer not created  !',
+      res.send({ status: '400 customer not created  !',
       valid: ans.valid,
 });
     }
