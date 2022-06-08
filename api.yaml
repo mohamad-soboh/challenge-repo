@@ -79,7 +79,7 @@ paths:
 
 #update customer detail  api 
 
-  /api/customers/update/:id:
+  /api/customers/update/{id}:
     patch:
       summary: update customer details
       parameters:
@@ -90,14 +90,11 @@ paths:
             type : string
       requestBody:
         description: Optional description in *Markdown*
-
         required: true
         content:
           application/json:
             schema:
-               type: object
-      required:
-         - id 
+              $ref: '#/definitions/Customer'  
       responses:
         '200':
           description: Created
@@ -129,3 +126,5 @@ definitions:
           type: string
         customer_mobile_number:
           type: number 
+
+          
