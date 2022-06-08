@@ -22,6 +22,7 @@ export const customer_create = async (req:Request, res:Response) => {
     customer_adress: req.body.customer_adress,
     customer_mobile_number: req.body.customer_mobile_number,
   };
+  console.log(req.body);
   const ans = await mobileService.mobile_validate(newCustomer.customer_mobile_number);
   //create  a new customer with those attribute that we recieved
   console.log(ans);
@@ -66,7 +67,7 @@ const customer_update = (req: Request, res: Response) => {
       res.send("customer updated with success !");
     })
     .catch((err) => {
-      throw err;
+      console.log(err);
     });
 };
 const customer_delete = (req: Request, res: Response) => {

@@ -1,0 +1,131 @@
+openapi: 3.0.0
+swagger: 2.0
+info:
+  title: Sample API
+  description: Optional multiline or single-line description in [CommonMark](http://commonmark.org/help/) or HTML.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:4545
+    description: Optional server description, e.g. Main (production) server
+  - url: http://staging-api.example.com
+    description: Optional server description, e.g. Internal staging server for testing
+
+# //   apis:["./api/customerAPI/customerRoute.ts","server.ts"]
+
+# components:
+#      schemas:
+#        Customer:
+#               type: object
+#               required:
+#                 - name
+#                 - adress
+#                 - mobileNumber
+# properties:
+#         name:
+#            type: string
+#            description: customer name
+#         adress:
+#            type: string
+#            description: customer adress
+#         mobileNumber:
+#            type: integer
+#            description: customer mobileNumber
+
+
+
+paths:
+#get all customer api 
+  /api/customers/AllCustomers:
+    get:
+      summary: Returns a list of customers.
+      description: People Who are already registered
+      responses:
+        200: # status code
+          description: Successul Response
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: integer
+                name:
+                  type: string
+
+
+  /api/customers/Addcustomer:
+    post:
+      summary: Add a new customer
+      requestBody:
+        description: Optional description in *Markdown*
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/Customer'     # <----------
+          application/xml:
+            schema:
+              $ref: '#/definitions/Customer'     # <----------
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/definitions/Customer'     # <----------
+          text/plain:
+            schema:
+              type: string
+      responses:
+        '200':
+          description: Created
+
+#update customer detail  api 
+
+  /api/customers/update/:id:
+    patch:
+      summary: update customer details
+      parameters:
+        - name: id
+          in: path
+          required: true
+      schema:
+            type : string
+      requestBody:
+        description: Optional description in *Markdown*
+
+        required: true
+        content:
+          application/json:
+            schema:
+               type: object
+      required:
+         - id 
+      responses:
+        '200':
+          description: Created
+
+
+#delete  a customer api 
+  /api/customers/DeleteCustomer/:id:
+    delete:
+      summary: Returns a list of users.
+      description: get all customers.
+      responses:
+        "200": # status code
+          description: success !
+        "400": # status code
+          description: error !
+
+
+definitions:
+  Customer:           
+    type: object
+    required:
+         - customer_name
+         - customer_adress
+         - customer_mobile_number
+    properties:
+        customer_name:
+          type: string
+        customer_adress:
+          type: string
+        customer_mobile_number:
+          type: number 
