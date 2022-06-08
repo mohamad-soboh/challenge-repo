@@ -41,8 +41,10 @@ paths:
       summary: Returns a list of customers.
       description: People Who are already registered
       responses:
-        200: # status code
-          description: Successul Response
+        201: # status code
+          description: Successful responses
+        400: # status code
+          description: bad request
           schema:
             type: array
             items:
@@ -75,8 +77,15 @@ paths:
             schema:
               type: string
       responses:
-        '200':
-          description: Created
+        201: # status code
+          description: success Customer created
+        471: # status code
+          description: failed invalid phone number
+        470: # status code
+          description: failed  phone number already exists 
+        422: # status code
+          description: failed number of third party apis calls haa finished 
+          
 
 #update customer detail  api 
 
@@ -98,7 +107,7 @@ paths:
             schema:
               $ref: '#/definitions/Customer'  
       responses:
-        '200':
+        '201':
           description: updated
 
 

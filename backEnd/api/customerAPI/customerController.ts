@@ -9,14 +9,16 @@ import { Request, Response } from "express";
 export const customer_index = (req:Request, res:Response) => {
   Customer.find()
     .then((customers) => {
-      res.status(200).json(customers);
+      res.status(201).json(customers);
     })
     .catch((err) => {
       console.log(err.response.data);
+      res.status(400).json(err);
     });
 };
 
 export const customer_create = async (req:Request, res:Response) => {
+ try{
   var newCustomer = {
     customer_name: req.body.customer_name,
     customer_adress: req.body.customer_adress,
@@ -28,7 +30,10 @@ export const customer_create = async (req:Request, res:Response) => {
   console.log(ans);
 
 const mobileCounter =await Customer.find({customer_mobile_number:req.body.customer_mobile_number})
-
+  if(ans.valid==false)
+  res.status(470).json('invalid phone number..dont forget to add prefix');
+  if(mobileCounter.length !=0)
+  res.status(470).json(' phone number already exists');
   if (ans.valid && mobileCounter.length==0) {
     var customer = new Customer(newCustomer);
     customer.save();
@@ -45,15 +50,15 @@ const mobileCounter =await Customer.find({customer_mobile_number:req.body.custom
     console.log(customer);
 
   }
-  else
-    {
-      res.send({ status: '400 customer not created  !',
-      valid: ans.valid,
-});
-    }
+  }
+  catch{
+    res.status(422).json('number of third party apis calls haa finished  ');
+
+  }
 };
 
 const customer_update = (req: Request, res: Response) => {
+  
   Customer.findOneAndUpdate(
     { _id: req.params.id },
     {
@@ -73,12 +78,13 @@ const customer_update = (req: Request, res: Response) => {
 const customer_delete = (req: Request, res: Response) => {
   Customer.findOneAndRemove({ _id: req.params.id })
     .then(() => {
-      res.status(200).json({
+      res.status(201).json({
         messsage: "Deleted with success !",
       });
     })
     .catch((err) => {
       console.log(err.response.data);
+      
     });
 };
 
