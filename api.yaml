@@ -79,8 +79,26 @@ paths:
       responses:
         201: # status code
           description: success Customer created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customer_name:
+                    type: string
+                    example:
+                     customer_name: mohamad 
+                    description:  UserName
+                  customer_adress:
+                    type: string
+                    description: customer adress 
+                  customer_mobile_number:
+                    type: number
+                    description:  customer phone number
+
+
         471: # status code
-          description: failed invalid phone number
+          description: failed invalid phone number ...dont forget to add prefix
         470: # status code
           description: failed  phone number already exists 
         422: # status code
@@ -123,10 +141,13 @@ paths:
       schema:
             type : string
       responses:
-        "200": # status code
-          description: success !
-        "400": # status code
-          description: error !
+        201: # status code
+          description: success Customer deleted
+        471: # status code
+          description: customer id not found 
+        470: # status code
+          description: failed  id must be 12-byte binary value, represented as a 24 character hex string.
+
 
 
 definitions:

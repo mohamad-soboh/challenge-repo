@@ -31,7 +31,7 @@ export const customer_create = async (req:Request, res:Response) => {
 
 const mobileCounter =await Customer.find({customer_mobile_number:req.body.customer_mobile_number})
   if(ans.valid==false)
-  res.status(470).json('invalid phone number..dont forget to add prefix');
+  res.status(471).json('invalid phone number..dont forget to add prefix');
   if(mobileCounter.length !=0)
   res.status(470).json(' phone number already exists');
   if (ans.valid && mobileCounter.length==0) {
@@ -39,13 +39,15 @@ const mobileCounter =await Customer.find({customer_mobile_number:req.body.custom
     customer.save();
     console.log(" customer created!");
     const objectToReturn = { status: 'customer created with success !',
+    newCustomer,
     valid: ans.valid,
     operatorName: ans.carrier,
     countryCode: ans.country.prefix,
     countryName: ans.country.name,
 }
     res.statusCode = 201;
-    res.send(objectToReturn)
+    res.send({
+      objectToReturn})
 
     console.log(customer);
 
@@ -57,8 +59,15 @@ const mobileCounter =await Customer.find({customer_mobile_number:req.body.custom
   }
 };
 
-const customer_update = (req: Request, res: Response) => {
+const customer_update = async (req: Request, res: Response) => {
+  if(req.params.id.length >12 )
+  res.status(470).json('id must be 12-byte binary value, represented as a 24 character hex string.');
   
+  const ans = await Customer.findOne( { _id: req.params.id })
+  const validate = await mobileService.mobile_validate(req.body.customer_mobile_number);
+
+  if(ans  ==null)
+  res.status(402).json('customer id not found ');
   Customer.findOneAndUpdate(
     { _id: req.params.id },
     {
@@ -69,13 +78,14 @@ const customer_update = (req: Request, res: Response) => {
   )
     .then(() => {
       console.log(req.body);
-      res.send("customer updated with success !");
+      res.status(201).json('customer updated with success !');
+
     })
     .catch((err) => {
       console.log(err);
     });
 };
-const customer_delete = (req: Request, res: Response) => {
+const customer_delete = async(req: Request, res: Response) => {
   Customer.findOneAndRemove({ _id: req.params.id })
     .then(() => {
       res.status(201).json({
@@ -83,8 +93,7 @@ const customer_delete = (req: Request, res: Response) => {
       });
     })
     .catch((err) => {
-      console.log(err.response.data);
-      
+      res.status(402).json(err);
     });
 };
 
