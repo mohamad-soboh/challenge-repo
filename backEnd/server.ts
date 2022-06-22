@@ -23,7 +23,7 @@ app.use(cors({origin: "*"}));
 
 
 
-app.get("/", (req: Request, res: Response, next: NextFunction) => {res.send("api running");});
+app.get("/", (req: Request, res: Response, next: NextFunction) => {res.send("server is running");});
 
 
 // //definec customer Routes 
@@ -61,3 +61,4 @@ app.listen(port, () => {
 // app.listen(4545, () => {
 //   console.log("server started ! ");
 // });
+module.exports = app
